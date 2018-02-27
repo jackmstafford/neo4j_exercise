@@ -1,5 +1,5 @@
-*data
-*gz
-*txt
-*sw*
-*pyc
+*.data
+*.gz
+*.txt
+*.sw*
+*.pyc

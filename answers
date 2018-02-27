@@ -1,0 +1,35 @@
+Jackson Stafford
+26 FEB 2018
+
+Questions:
+2) How many rid nodes are there with no edges?
+
+	MATCH (r:rid) 
+	WHERE NOT (r)-[]-() 
+	RETURN COUNT(r) AS C;
+
+	There are 0 rid nodes with no edges
+
+
+3) How many cid nodes have more than one edge to an oid node?
+
+	MATCH (c:cid)-[]-(:oid) 
+	WITH c, COUNT(*) AS cnt 
+	WHERE cnt > 1 
+	RETURN COUNT(c) AS C;
+	
+	There are 810 cid nodes with more than one edge to an oid node
+
+
+4) Are there any rid nodes with multiple cid nodes? If so, what percent?
+
+	MATCH (c:cid)-[]-(:oid) 
+	MATCH (r:rid) 
+	WITH COUNT(r) AS cr 
+	MATCH (c:rid)-[]-(:cid) 
+	WITH cr, c, COUNT(*) AS cnt 
+	WHERE cnt > 1 
+	WITH cr, COUNT(c) AS cc 
+	RETURN cc AS C, 100.0 * cc / cr AS C1;
+
+	There are 52 rid nodes with multiple cid nodes, which is 3.74909877433% of all rid nodes
